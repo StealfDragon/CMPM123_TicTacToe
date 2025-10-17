@@ -28,7 +28,7 @@ namespace ClassGame {
         {
                 ImGui::DockSpaceOverViewport();
 
-                //ImGui::ShowDemoWindow();
+                ImGui::ShowDemoWindow();
 
                 if (!game) return;
                 if (!game->getCurrentPlayer()) return;

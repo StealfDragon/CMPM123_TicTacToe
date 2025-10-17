@@ -51,13 +51,26 @@ Bit* TicTacToe::PieceForPlayer(const int playerNumber)
 //
 // setup the game board, this is called once at the start of the game
 //
-void TicTacToe::setUpBoard()
+void TicTacToe::setUpBoard() //DONE (I think)
 {
     // here we should call setNumberOfPlayers to 2 and then set up the game options so the mouse knows to draw a 3x3 grid
     // _gameOptions has a rowX and rowY property we should set to 3
     // then we need to setup our 3x3 array in _grid with the correct position of the square, and load the "square.png" sprite for each square
     // we will use the initHolder function on each square to do this
     // finally we should call startGame to get everything going
+
+    setNumberOfPlayers(2);
+    _gameOptions.rowX = 3;
+    _gameOptions.rowY = 3;
+
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            ImVec2 position(5 + j * 100, 5 + i * 100);
+            _grid[i][j].initHolder(position, "square.png", j, i);
+        }
+    }
+
+    startGame();
 }
 
 //
@@ -98,7 +111,7 @@ bool TicTacToe::canBitMoveFromTo(Bit* bit, BitHolder*src, BitHolder*dst)
 //
 // free all the memory used by the game on the heap
 //
-void TicTacToe::stopGame()
+void TicTacToe::stopGame() //TODO
 {
     // clear out the board
     // loop through the 3x3 array and call destroyBit on each square
@@ -107,7 +120,7 @@ void TicTacToe::stopGame()
 //
 // helper function for the winner check
 //
-Player* TicTacToe::ownerAt(int index ) const
+Player* TicTacToe::ownerAt(int index ) const //TODO
 {
     // index is 0..8, convert to x,y using:
     // y = index / 3
@@ -117,7 +130,7 @@ Player* TicTacToe::ownerAt(int index ) const
     return nullptr;
 }
 
-Player* TicTacToe::checkForWinner()
+Player* TicTacToe::checkForWinner() //DONE (I think)
 {
     // check all the winning triples
     // if any of them have the same owner return that player
@@ -138,10 +151,30 @@ Player* TicTacToe::checkForWinner()
 
     // Hint: Consider using an array to store the winning combinations
     // to avoid repetitive code
+
+    int tttCoords[8][3] = {
+        {0,1,2},
+        {3,4,5},
+        {6,7,8},
+        {0,3,6},
+        {1,4,7},
+        {2,5,8},
+        {0,4,8},
+        {2,4,6}
+    };
+
+    for (int row = 0; row < 8; row++) {
+        if (ownerAt(tttCoords[row][0]) == ownerAt(tttCoords[row][1])) {
+            if (ownerAt(tttCoords[row][1]) == ownerAt(tttCoords[row][2])) {
+                return ownerAt(tttCoords[row][0]);
+            }
+        }
+    }
+
     return nullptr;
 }
 
-bool TicTacToe::checkForDraw()
+bool TicTacToe::checkForDraw() //TODO
 {
     // is the board full with no winner?
     // if any square is empty, return false
@@ -161,7 +194,7 @@ std::string TicTacToe::initialStateString()
 // this still needs to be tied into imguis init and shutdown
 // we will read the state string and store it in each turn object
 //
-std::string TicTacToe::stateString() const
+std::string TicTacToe::stateString() const //TODO
 {
     // return a string representing the current state of the board
     // the string should be 9 characters long, one for each square
@@ -183,7 +216,7 @@ std::string TicTacToe::stateString() const
 // this still needs to be tied into imguis init and shutdown
 // when the program starts it will load the current game from the imgui ini file and set the game state to the last saved state
 //
-void TicTacToe::setStateString(const std::string &s)
+void TicTacToe::setStateString(const std::string &s) //TODO
 {
     // set the state of the board from the given string
     // the string will be 9 characters long, one for each square
