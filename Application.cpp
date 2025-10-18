@@ -66,7 +66,7 @@ namespace ClassGame {
                 gameOver = true;
                 gameWinner = winner->playerNumber();
             }
-            else if (game->checkForDraw()) {
+            else if (game->checkForDraw()) { //changed this to an else if because in my opinion draw should only be called if !winner
                 gameOver = true;
                 gameWinner = -1;
             }
